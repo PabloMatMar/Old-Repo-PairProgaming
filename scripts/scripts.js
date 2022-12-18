@@ -6,6 +6,7 @@ function reordenarArr(array) {
 
 
 // Api preguntas : https://opentdb.com/
+// Creamos array de objetos a partir de la api
 
 async function pedirPreguntas() {
   const datos = await fetch('https://opentdb.com/api.php?amount=10&category=27&difficulty=easy&type=multiple')
@@ -30,73 +31,59 @@ async function pedirPreguntas() {
     arrayPreguntas.push(question)
   }
 
-
-
+  //Usamos el arrayPreguntas para pintar el DOM:
+  
   for (let i = 0; i < arrayPreguntas.length; i++) {
 
-    let preguntasReordenadas = reordenarArr(arrayPreguntas[i].answers)
+    let respuestasReordenadas = reordenarArr(arrayPreguntas[i].answers)
 
     const union = document.getElementById("formpreguntas");
-    const pregunta = document.createElement("fieldset");
+    const pregunta = document.createElement(`fieldset`);
+    pregunta.setAttribute("id", `test${i + 1}`)
+
     union.appendChild(pregunta);
+    const encabezado = document.createElement("legend");
+    encabezado.setAttribute("class", "titulo");
+    encabezado.innerHTML = arrayPreguntas[i].question;
+    pregunta.appendChild(encabezado);
 
-    pregunta.innerHTML = `
-    <legend class="titulo">${arrayPreguntas[i].question}</legend>
-    <div class="respuestas">
-    <label for="${preguntasReordenadas[0].value}">${preguntasReordenadas[0].label}</label>
-    <input id="${preguntasReordenadas[0].value}" type="radio" name="${arrayPreguntas[i].name}" value="${preguntasReordenadas[0].value}">
 
-    <label for="${preguntasReordenadas[1].value}">${preguntasReordenadas[1].label}</label>
-    <input id="${preguntasReordenadas[1].value}" type="radio" name="${arrayPreguntas[i].name}" value="${preguntasReordenadas[1].value}">
+    const divRespuestas = document.createElement("div");
+    divRespuestas.setAttribute("class", "respuestas")
+    pregunta.appendChild(divRespuestas)
 
-    <label for="${preguntasReordenadas[2].value}">${preguntasReordenadas[2].label}</label>
-    <input id="${preguntasReordenadas[2].value}" type="radio" name="${arrayPreguntas[i].name}" value="${preguntasReordenadas[2].value}">
+    for (let j = 0; j < arrayPreguntas[i].answers.length; j++) {
+      const labelRespuestas = document.createElement("label")
+      labelRespuestas.setAttribute("for", `${respuestasReordenadas[j].value}`)
+      labelRespuestas.innerHTML = respuestasReordenadas[j].label;
+      divRespuestas.appendChild(labelRespuestas)
 
-    <label for="${preguntasReordenadas[3].value}">${preguntasReordenadas[3].label}</label>
-    <input id="${preguntasReordenadas[3].value}" type="radio" name="${arrayPreguntas[i].name}" value="${preguntasReordenadas[3].value}">
-    </div>
+      const inputRespuestas = document.createElement("input")
+      inputRespuestas.setAttribute("id", `${respuestasReordenadas[j].value}`)
+      inputRespuestas.setAttribute("type", "radio")
+      inputRespuestas.setAttribute("name", `${arrayPreguntas[i].name}`)
+      inputRespuestas.setAttribute("value", `${respuestasReordenadas[j].value}`)
+      divRespuestas.appendChild(inputRespuestas)
 
-    <button type="submit">Enviar respuesta</button>`
+    }
+
+    if (arrayPreguntas[i] !== arrayPreguntas[arrayPreguntas.length-1]){
+      const botonSiguiente = document.createElement("button");
+      botonSiguiente.setAttribute("type", "button");
+      botonSiguiente.innerHTML = "Siguiente";
+      pregunta.appendChild(botonSiguiente);
+
+    } else {
+      
+      const botonFinal = document.createElement("input");
+      botonFinal.setAttribute("type", "submit");
+      botonFinal.setAttribute("value", "Finalizado");
+      pregunta.appendChild(botonFinal);
+    }
   }
-
 }
 
+
 pedirPreguntas()
-
-
-
-/* <form name="dnd">
-    <fieldset>
-      <legend>En el mundo de Dragones y Mazmorras, ¿Quién es Elminster?</legend>
-
-      <div>
-      <label for="bard-field">Un bardo</label>
-      <input id="bard-field" type="radio" name="elminster" value="bardo">
-
-      <label for="merchant-field">Un mercader</label>
-      <input id="merchant-field" type="radio" name="elminster" value="mercader">
-
-      <label for="sorcerer-field">Un mago</label>
-      <input id="sorcerer-field" type="radio" name="elminster" value="mago">
-
-      <label for="sailor-field">Un marinero</label>
-      <input id="sailor-field" type="radio" name="elminster" value="marinero">
-      </div>
-    </fieldset>
-
-    <button type="submit">Comprobar datos</button>
-</form> */
-
-
-
-
-
-
-// reordenar(arrayDeNumeros)
-
-// function compareNumbers(a, b) {
-//     return a - b;
-//   }
-
 
 

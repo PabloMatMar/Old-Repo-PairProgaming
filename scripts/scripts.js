@@ -39,6 +39,8 @@ async function pedirPreguntas() {
 
     const union = document.getElementById("formpreguntas");
     const pregunta = document.createElement(`fieldset`);
+    //Este ternario identifica la primera pregunta con una clase ya que tendrá que estar abierta desde el principio y las demás cerradas
+    i == 0 ? pregunta.setAttribute("class","firstquestion") : pregunta.setAttribute("class","regularquestion");
     pregunta.setAttribute("id", `test${i + 1}`)
 
     union.appendChild(pregunta);
@@ -52,13 +54,14 @@ async function pedirPreguntas() {
     divRespuestas.setAttribute("class", "respuestas")
     pregunta.appendChild(divRespuestas)
 
+    var inputRespuestas;
     for (let j = 0; j < arrayPreguntas[i].answers.length; j++) {
       const labelRespuestas = document.createElement("label")
       labelRespuestas.setAttribute("for", `${respuestasReordenadas[j].value}`)
       labelRespuestas.innerHTML = respuestasReordenadas[j].label;
       divRespuestas.appendChild(labelRespuestas)
 
-      const inputRespuestas = document.createElement("input")
+      inputRespuestas = document.createElement("input")
       inputRespuestas.setAttribute("id", `${respuestasReordenadas[j].value}`)
       inputRespuestas.setAttribute("type", "radio")
       inputRespuestas.setAttribute("name", `${arrayPreguntas[i].name}`)
@@ -70,8 +73,28 @@ async function pedirPreguntas() {
     if (arrayPreguntas[i] !== arrayPreguntas[arrayPreguntas.length-1]){
       const botonSiguiente = document.createElement("button");
       botonSiguiente.setAttribute("type", "button");
+      botonSiguiente.setAttribute("id", `button${i}`);
       botonSiguiente.innerHTML = "Siguiente";
       pregunta.appendChild(botonSiguiente);
+
+
+      // Intento de que el botón siguiente no se pueda seleccionar
+
+      // const input = document.querySelector(`input[name="${arrayPreguntas[i].name}"]`);
+      
+      // input.addEventListener('change', function() {
+      //   if (input.checked) {
+      //     botonSiguiente.disabled = true;
+      //   } else {
+      //     botonSiguiente.disabled = false;
+      //   }
+      // });
+
+      botonSiguiente.onclick = function () {
+  
+        document.getElementById(`test${i+1}`).style.display = "none"
+        document.getElementById(`test${i+2}`).style.display = "block"
+      }
 
     } else {
       
@@ -81,6 +104,7 @@ async function pedirPreguntas() {
       pregunta.appendChild(botonFinal);
     }
   }
+
 }
 
 

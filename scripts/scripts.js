@@ -39,7 +39,6 @@ async function pedirPreguntas() {
 
     const union = document.getElementById("formpreguntas");
     const pregunta = document.createElement(`fieldset`);
-    //Este ternario identifica la primera pregunta con una clase ya que tendrá que estar abierta desde el principio y las demás cerradas
     i == 0 ? pregunta.setAttribute("class", "firstquestion") : pregunta.setAttribute("class", "regularquestion");
     pregunta.setAttribute("id", `test${i + 1}`)
 
@@ -78,13 +77,6 @@ async function pedirPreguntas() {
       pregunta.appendChild(botonSiguiente);
 
 
-      // Intento de que el botón siguiente no se pueda seleccionar
-
-
-     
-
-
-
       botonSiguiente.disabled = true;
 
       const input = document.querySelectorAll(`#test${i+1}>div>input`);
@@ -94,9 +86,7 @@ async function pedirPreguntas() {
         }
       })
 
-
       botonSiguiente.onclick = function () {
-
         document.getElementById(`test${i + 1}`).style.display = "none"
         document.getElementById(`test${i + 2}`).style.display = "block"
       }
@@ -110,9 +100,20 @@ async function pedirPreguntas() {
     }
   }
 
-}
+//Validación del formulario:
 
+
+
+
+
+
+
+
+
+}
 pedirPreguntas()
+
+
 
 
 

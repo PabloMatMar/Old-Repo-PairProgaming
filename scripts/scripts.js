@@ -32,7 +32,7 @@ async function pedirPreguntas() {
   }
 
   //Usamos el arrayPreguntas para pintar el DOM:
-  
+
   for (let i = 0; i < arrayPreguntas.length; i++) {
 
     let respuestasReordenadas = reordenarArr(arrayPreguntas[i].answers)
@@ -40,7 +40,7 @@ async function pedirPreguntas() {
     const union = document.getElementById("formpreguntas");
     const pregunta = document.createElement(`fieldset`);
     //Este ternario identifica la primera pregunta con una clase ya que tendrá que estar abierta desde el principio y las demás cerradas
-    i == 0 ? pregunta.setAttribute("class","firstquestion") : pregunta.setAttribute("class","regularquestion");
+    i == 0 ? pregunta.setAttribute("class", "firstquestion") : pregunta.setAttribute("class", "regularquestion");
     pregunta.setAttribute("id", `test${i + 1}`)
 
     union.appendChild(pregunta);
@@ -70,7 +70,7 @@ async function pedirPreguntas() {
 
     }
 
-    if (arrayPreguntas[i] !== arrayPreguntas[arrayPreguntas.length-1]){
+    if (arrayPreguntas[i] !== arrayPreguntas[arrayPreguntas.length - 1]) {
       const botonSiguiente = document.createElement("button");
       botonSiguiente.setAttribute("type", "button");
       botonSiguiente.setAttribute("id", `button${i}`);
@@ -80,24 +80,29 @@ async function pedirPreguntas() {
 
       // Intento de que el botón siguiente no se pueda seleccionar
 
-      // const input = document.querySelector(`input[name="${arrayPreguntas[i].name}"]`);
-      
-      // input.addEventListener('change', function() {
-      //   if (input.checked) {
-      //     botonSiguiente.disabled = true;
-      //   } else {
-      //     botonSiguiente.disabled = false;
-      //   }
-      // });
+
+     
+
+
+
+      botonSiguiente.disabled = true;
+
+      const input = document.querySelectorAll(`#test${i+1}>div>input`);
+      input.forEach((input) => {
+        input.onclick = function () {
+          botonSiguiente.disabled = false
+        }
+      })
+
 
       botonSiguiente.onclick = function () {
-  
-        document.getElementById(`test${i+1}`).style.display = "none"
-        document.getElementById(`test${i+2}`).style.display = "block"
+
+        document.getElementById(`test${i + 1}`).style.display = "none"
+        document.getElementById(`test${i + 2}`).style.display = "block"
       }
 
     } else {
-      
+
       const botonFinal = document.createElement("input");
       botonFinal.setAttribute("type", "submit");
       botonFinal.setAttribute("value", "Finalizado");
@@ -107,7 +112,8 @@ async function pedirPreguntas() {
 
 }
 
-
 pedirPreguntas()
+
+
 
 

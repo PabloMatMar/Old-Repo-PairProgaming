@@ -79,7 +79,7 @@ async function pedirPreguntas() {
 
       botonSiguiente.disabled = true;
 
-      const input = document.querySelectorAll(`#test${i+1}>div>input`);
+      const input = document.querySelectorAll(`#test${i + 1}>div>input`);
       input.forEach((input) => {
         input.onclick = function () {
           botonSiguiente.disabled = false
@@ -97,10 +97,45 @@ async function pedirPreguntas() {
       botonFinal.setAttribute("type", "submit");
       botonFinal.setAttribute("value", "Finalizado");
       pregunta.appendChild(botonFinal);
+
+      
+      botonFinal.disabled = true;
+
+      const input = document.querySelectorAll(`#test${i + 1}>div>input`);
+      input.forEach((input) => {
+        input.onclick = function () {
+          botonFinal.disabled = false
+        }
+      })
+
     }
   }
 
-//Validación del formulario:
+  //Validación del formulario:
+
+
+  document.querySelector('#formpreguntas').addEventListener('submit', function (event) {
+    
+    event.preventDefault();
+
+    let puntuacion = 0;
+    for (let i = 0; i < arrayPreguntas.length; i++) {
+      if (event.target[arrayPreguntas[i].name].value === arrayPreguntas[i].correct){
+        puntuacion++;
+      }
+    }
+    console.log(puntuacion)
+      
+    const nuevosDatos = {
+      cantidadDeAciertos: puntuacion,
+      fecha: Date.now()
+    }
+
+    console.log(nuevosDatos)
+
+
+  })
+
 
 
 
@@ -112,9 +147,3 @@ async function pedirPreguntas() {
 
 }
 pedirPreguntas()
-
-
-
-
-
-

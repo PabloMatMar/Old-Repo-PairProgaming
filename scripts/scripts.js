@@ -1,11 +1,23 @@
-const arrayPuntuaciones = []
-localStorage.setItem("memoryCard", JSON.stringify(arrayPuntuaciones));
+//Creación de espacio en el localstorage en caso de que no exista la clave:
+
+for (let i = 0; i < localStorage.length; i++) {
+  let key = localStorage.key(i);
+  if (key === 'memoryCard') {
+    break;
+  } else {
+  const arrayPuntuaciones = []
+  localStorage.setItem("memoryCard", JSON.stringify(arrayPuntuaciones));
+  }
+}
+
 
 //Funciones auxiliares:
 //Funcion para reordenar:
 function reordenarArr(array) {
   return array.sort(() => Math.random() - 0.5)
 }
+
+
 
 
 // Api preguntas : https://opentdb.com/
@@ -56,6 +68,7 @@ async function pedirPreguntas() {
     divRespuestas.setAttribute("class", "respuestas")
     pregunta.appendChild(divRespuestas)
 
+    //Las opciones se pintan en un bucle que itera con j dentro del bucle que itera con i
     var inputRespuestas;
     for (let j = 0; j < arrayPreguntas[i].answers.length; j++) {
       const labelRespuestas = document.createElement("label")
@@ -71,7 +84,7 @@ async function pedirPreguntas() {
       divRespuestas.appendChild(inputRespuestas)
 
     }
-
+    // El botón que acompaña a cada pregunta es un botón que desbloquea la siguiente (exceptuando la última pregunta)
     if (arrayPreguntas[i] !== arrayPreguntas[arrayPreguntas.length - 1]) {
       const botonSiguiente = document.createElement("button");
       botonSiguiente.setAttribute("type", "button");
@@ -93,7 +106,7 @@ async function pedirPreguntas() {
         document.getElementById(`test${i + 1}`).style.display = "none"
         document.getElementById(`test${i + 2}`).style.display = "block"
       }
-
+    //El último botón cierrra es el input del formulario
     } else {
 
       const botonFinal = document.createElement("input");
@@ -120,6 +133,7 @@ async function pedirPreguntas() {
   document.querySelector('#formpreguntas').addEventListener('submit', function (event) {
     
     event.preventDefault();
+    //Establecemos un contador que suma si la respuesta es correcta
 
     let contador = 0;
     for (let i = 0; i < arrayPreguntas.length; i++) {
@@ -127,49 +141,72 @@ async function pedirPreguntas() {
         contador++;
       }
     }
-    //Datos usuario
+
+    //Datos de la partida jugada por el usuario:
     let nuevosDatos = {
       puntuacion: contador,
       fecha: new Date().toLocaleString()
     }
 
-    //Guardado de datos
+
+
+    //Guardado de datos:
+
     let arrayGuardado = JSON.parse(localStorage.getItem("memoryCard"))
     arrayGuardado.push(nuevosDatos)
     localStorage.setItem("memoryCard", JSON.stringify(arrayGuardado))
     
-
-
+    //Salida hacia la siguiente página exigida por el ejercicio (donde se desplega unicamente un mensaje con el resultado final) => results.html
+  
+  window.location.replace("results.html"); //Borra datos guardados
 
   })
 
 }
+
+if (document.title == 'Quiz') {
 pedirPreguntas()
+}
 
 
 
-//Pintado de datos
 
-    // const puntuacionFinal = document.querySelector("#puntuacion")
-    // const mensaje = document.querySelector("#mensajepuntuacion")
+
+// if (document.title == 'Tu resultado') {
+
+
+
+//   const puntuacionFinal = document.querySelector("#puntuacion")
+//   const mensaje = document.querySelector("#mensajepuntuacion")
+
+
+
+
+// }
+
+
+
+// //Pintado de datos
 
     
-    // puntuacionFinal.innerHTML = `${nuevosDatos.puntuacion} / ${arrayPreguntas.length}`
-    // console.log(puntuacionFinal)
-    
-    // if (nuevosDatos.puntuacion == arrayPreguntas.length) {
-    //   mensaje.innerHTML = "Increible, lo acertaste todo"
-    // }
 
-    // if (nuevosDatos.puntuacion >= 7) {
-    //   mensaje.innerHTML = "Un poco más y lo sacas todo"
-    // }
     
-    // if (nuevosDatos.puntuacion >= 5 ) {
-    //   mensaje.innerHTML = "Tienes buen conomiento sobre animales"
-    // }
+//     puntuacionFinal.innerHTML = `${nuevosDatos.puntuacion} / ${arrayPreguntas.length}`
+//     console.log(puntuacionFinal)
     
-    // if (nuevosDatos.puntuacion < 5) {
-    //   mensaje.innerHTML = "No vayas a africa o te comeran los bichos"
-    // }
+//     if (nuevosDatos.puntuacion == arrayPreguntas.length) {
+//       mensaje.innerHTML = "Increible, lo acertaste todo"
+//     }
+
+//     if (nuevosDatos.puntuacion >= 7) {
+//       mensaje.innerHTML = "Un poco más y lo sacas todo"
+//     }
+    
+//     if (nuevosDatos.puntuacion >= 5 ) {
+//       mensaje.innerHTML = "Tienes buen conomiento sobre animales"
+//     }
+    
+//     if (nuevosDatos.puntuacion < 5) {
+//       mensaje.innerHTML = "No vayas a africa o te comeran los bichos"
+//     }
     

@@ -7,6 +7,8 @@
     <title>¡Bienvenido al Quiz!</title>
     <link rel="stylesheet" href="./styles/normalize.css">
     <link rel="stylesheet" href="./styles/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 <body>
     <header>
@@ -17,8 +19,16 @@
             <a href="./pages/question.html"><button>COMENZAR QUIZ</button></a>
         </section>
         <section>
+            <h2>Últimas puntuaciones</h2>
 
-            <!-- Tabla arriba y debajo fecha y resultados -->
+
+            <div id="chartdiv">
+                <canvas id="myChart"></canvas>
+            </div>
+              
+            <div>
+            <ul id="listapuntuaciones"> <!-- Tabla con fecha y resultados --> </uls>
+            </div>
         </section>
     </main>
     <footer>

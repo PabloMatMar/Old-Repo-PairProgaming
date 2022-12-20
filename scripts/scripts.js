@@ -1,3 +1,6 @@
+const arrayPuntuaciones = []
+localStorage.setItem("memoryCard", JSON.stringify(arrayPuntuaciones));
+
 //Funciones auxiliares:
 //Funcion para reordenar:
 function reordenarArr(array) {
@@ -118,32 +121,55 @@ async function pedirPreguntas() {
     
     event.preventDefault();
 
-    let puntuacion = 0;
+    let contador = 0;
     for (let i = 0; i < arrayPreguntas.length; i++) {
       if (event.target[arrayPreguntas[i].name].value === arrayPreguntas[i].correct){
-        puntuacion++;
+        contador++;
       }
     }
-    console.log(puntuacion)
-      
-    const nuevosDatos = {
-      cantidadDeAciertos: puntuacion,
-      fecha: Date.now()
+    //Datos usuario
+    let nuevosDatos = {
+      puntuacion: contador,
+      fecha: new Date().toLocaleString()
     }
 
-    console.log(nuevosDatos)
+    //Guardado de datos
+    let arrayGuardado = JSON.parse(localStorage.getItem("memoryCard"))
+    arrayGuardado.push(nuevosDatos)
+    localStorage.setItem("memoryCard", JSON.stringify(arrayGuardado))
+    
+
 
 
   })
 
-
-
-
-
-
-
-
-
-
 }
 pedirPreguntas()
+
+
+
+//Pintado de datos
+
+    // const puntuacionFinal = document.querySelector("#puntuacion")
+    // const mensaje = document.querySelector("#mensajepuntuacion")
+
+    
+    // puntuacionFinal.innerHTML = `${nuevosDatos.puntuacion} / ${arrayPreguntas.length}`
+    // console.log(puntuacionFinal)
+    
+    // if (nuevosDatos.puntuacion == arrayPreguntas.length) {
+    //   mensaje.innerHTML = "Increible, lo acertaste todo"
+    // }
+
+    // if (nuevosDatos.puntuacion >= 7) {
+    //   mensaje.innerHTML = "Un poco más y lo sacas todo"
+    // }
+    
+    // if (nuevosDatos.puntuacion >= 5 ) {
+    //   mensaje.innerHTML = "Tienes buen conomiento sobre animales"
+    // }
+    
+    // if (nuevosDatos.puntuacion < 5) {
+    //   mensaje.innerHTML = "No vayas a africa o te comeran los bichos"
+    // }
+    

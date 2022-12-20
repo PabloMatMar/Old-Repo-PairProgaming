@@ -5,19 +5,16 @@ for (let i = 0; i < localStorage.length; i++) {
   if (key === 'memoryCard') {
     break;
   } else {
-  const arrayPuntuaciones = []
-  localStorage.setItem("memoryCard", JSON.stringify(arrayPuntuaciones));
+    const arrayPuntuaciones = []
+    localStorage.setItem("memoryCard", JSON.stringify(arrayPuntuaciones));
   }
 }
-
 
 //Funciones auxiliares:
 //Funcion para reordenar:
 function reordenarArr(array) {
   return array.sort(() => Math.random() - 0.5)
 }
-
-
 
 
 // Api preguntas : https://opentdb.com/
@@ -106,7 +103,7 @@ async function pedirPreguntas() {
         document.getElementById(`test${i + 1}`).style.display = "none"
         document.getElementById(`test${i + 2}`).style.display = "block"
       }
-    //El último botón cierrra es el input del formulario
+      //El último botón cierrra es el input del formulario
     } else {
 
       const botonFinal = document.createElement("input");
@@ -114,7 +111,7 @@ async function pedirPreguntas() {
       botonFinal.setAttribute("value", "Finalizado");
       pregunta.appendChild(botonFinal);
 
-      
+
       botonFinal.disabled = true;
 
       const input = document.querySelectorAll(`#test${i + 1}>div>input`);
@@ -131,13 +128,13 @@ async function pedirPreguntas() {
 
 
   document.querySelector('#formpreguntas').addEventListener('submit', function (event) {
-    
+
     event.preventDefault();
     //Establecemos un contador que suma si la respuesta es correcta
 
     let contador = 0;
     for (let i = 0; i < arrayPreguntas.length; i++) {
-      if (event.target[arrayPreguntas[i].name].value === arrayPreguntas[i].correct){
+      if (event.target[arrayPreguntas[i].name].value === arrayPreguntas[i].correct) {
         contador++;
       }
     }
@@ -148,65 +145,106 @@ async function pedirPreguntas() {
       fecha: new Date().toLocaleString()
     }
 
-
-
     //Guardado de datos:
 
     let arrayGuardado = JSON.parse(localStorage.getItem("memoryCard"))
     arrayGuardado.push(nuevosDatos)
     localStorage.setItem("memoryCard", JSON.stringify(arrayGuardado))
-    
+
     //Salida hacia la siguiente página exigida por el ejercicio (donde se desplega unicamente un mensaje con el resultado final) => results.html
-  
-  window.location.replace("results.html"); //Borra datos guardados
+
+    window.location.replace("results.html"); //Borra datos guardados
 
   })
 
 }
 
 if (document.title == 'Quiz') {
-pedirPreguntas()
+  pedirPreguntas()
+}
+
+if (document.title == 'Tu resultado') {
+  let arrayGuardado = JSON.parse(localStorage.getItem("memoryCard"));
+  let ultimaPuntuacion = arrayGuardado[arrayGuardado.length - 1].puntuacion
+
+  const resultadoMostrado = document.querySelector("#puntuacion")
+  const mensajeMostrado = document.querySelector("#mensajepuntuacion")
+
+  resultadoMostrado.innerHTML = `${ultimaPuntuacion} / 10`
+
+  if (ultimaPuntuacion == 10) {
+    mensajeMostrado.innerHTML = "¡Increible! ¡lo acertaste todo!"
+  } else {
+    ultimaPuntuacion >= 5 ? mensajeMostrado.innerHTML = "Tienes un buen conocimiento sobre los animales" : mensajeMostrado.innerHTML = "No vayas a África o te comerán los bichos"
+  }
+}
+
+//HOME:
+if (document.title == '¡Bienvenido al Quiz!') {
+
+
+  //Extraccion de datos:
+  let arrayGuardado = JSON.parse(localStorage.getItem("memoryCard"));
+  let arrayX = [];
+  let arrayY = [];
+  for (let i = 0; i < arrayGuardado.length; i++) {
+    arrayX.push(arrayGuardado[i].fecha);
+    arrayY.push(arrayGuardado[i].puntuacion);
+  }
+
+
+  //CHART de Chart.js:
+
+  const ctx = document.getElementById('myChart');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: arrayX,
+      datasets: [{
+        label: 'Respuestas acertadas',
+        data: arrayY,
+        borderColor: 'black',
+        backgroundColor: 'lightblue',
+        borderWidth: 4,
+      }]
+    },
+    options: {
+      layout: {
+        padding: 10
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Puntuaciones anteriores',
+        },
+
+      },
+      aspectRatio: 1,
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 10,
+          min: 0
+        }
+      }
+    }
+  });
+  
+  const listaPuntuaciones = document.getElementById("listapuntuaciones")
+  for (let i = 0; i < arrayGuardado.length; i++) {
+    let item = document.createElement("li")
+    item.innerHTML = `${arrayGuardado[i].fecha.substring(11,17)}: <b>${arrayGuardado[i].puntuacion} aciertos</b>`
+    listaPuntuaciones.appendChild(item)
+    
+  }
+
+
 }
 
 
+//Función para redirigir en un tiempo determinado:
 
-
-
-// if (document.title == 'Tu resultado') {
-
-
-
-//   const puntuacionFinal = document.querySelector("#puntuacion")
-//   const mensaje = document.querySelector("#mensajepuntuacion")
-
-
-
-
-// }
-
-
-
-// //Pintado de datos
-
-    
-
-    
-//     puntuacionFinal.innerHTML = `${nuevosDatos.puntuacion} / ${arrayPreguntas.length}`
-//     console.log(puntuacionFinal)
-    
-//     if (nuevosDatos.puntuacion == arrayPreguntas.length) {
-//       mensaje.innerHTML = "Increible, lo acertaste todo"
-//     }
-
-//     if (nuevosDatos.puntuacion >= 7) {
-//       mensaje.innerHTML = "Un poco más y lo sacas todo"
-//     }
-    
-//     if (nuevosDatos.puntuacion >= 5 ) {
-//       mensaje.innerHTML = "Tienes buen conomiento sobre animales"
-//     }
-    
-//     if (nuevosDatos.puntuacion < 5) {
-//       mensaje.innerHTML = "No vayas a africa o te comeran los bichos"
-//     }
-    
+// function pageRedirect() {
+//   window.location.replace("../home.html");
+// }    
+// setTimeout("pageRedirect()", 10000);

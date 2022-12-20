@@ -1,3 +1,6 @@
+const arrayPuntuaciones = []
+localStorage.setItem("memoryCard", JSON.stringify(arrayPuntuaciones));
+
 //Funciones auxiliares:
 //Funcion para reordenar:
 function reordenarArr(array) {
@@ -79,7 +82,7 @@ async function pedirPreguntas() {
 
       botonSiguiente.disabled = true;
 
-      const input = document.querySelectorAll(`#test${i+1}>div>input`);
+      const input = document.querySelectorAll(`#test${i + 1}>div>input`);
       input.forEach((input) => {
         input.onclick = function () {
           botonSiguiente.disabled = false
@@ -97,24 +100,76 @@ async function pedirPreguntas() {
       botonFinal.setAttribute("type", "submit");
       botonFinal.setAttribute("value", "Finalizado");
       pregunta.appendChild(botonFinal);
+
+      
+      botonFinal.disabled = true;
+
+      const input = document.querySelectorAll(`#test${i + 1}>div>input`);
+      input.forEach((input) => {
+        input.onclick = function () {
+          botonFinal.disabled = false
+        }
+      })
+
     }
   }
 
-//Validación del formulario:
+  //Validación del formulario:
+
+
+  document.querySelector('#formpreguntas').addEventListener('submit', function (event) {
+    
+    event.preventDefault();
+
+    let contador = 0;
+    for (let i = 0; i < arrayPreguntas.length; i++) {
+      if (event.target[arrayPreguntas[i].name].value === arrayPreguntas[i].correct){
+        contador++;
+      }
+    }
+    //Datos usuario
+    let nuevosDatos = {
+      puntuacion: contador,
+      fecha: new Date().toLocaleString()
+    }
+
+    //Guardado de datos
+    let arrayGuardado = JSON.parse(localStorage.getItem("memoryCard"))
+    arrayGuardado.push(nuevosDatos)
+    localStorage.setItem("memoryCard", JSON.stringify(arrayGuardado))
+    
 
 
 
-
-
-
-
-
+  })
 
 }
 pedirPreguntas()
 
 
 
+//Pintado de datos
 
+    // const puntuacionFinal = document.querySelector("#puntuacion")
+    // const mensaje = document.querySelector("#mensajepuntuacion")
 
+    
+    // puntuacionFinal.innerHTML = `${nuevosDatos.puntuacion} / ${arrayPreguntas.length}`
+    // console.log(puntuacionFinal)
+    
+    // if (nuevosDatos.puntuacion == arrayPreguntas.length) {
+    //   mensaje.innerHTML = "Increible, lo acertaste todo"
+    // }
 
+    // if (nuevosDatos.puntuacion >= 7) {
+    //   mensaje.innerHTML = "Un poco más y lo sacas todo"
+    // }
+    
+    // if (nuevosDatos.puntuacion >= 5 ) {
+    //   mensaje.innerHTML = "Tienes buen conomiento sobre animales"
+    // }
+    
+    // if (nuevosDatos.puntuacion < 5) {
+    //   mensaje.innerHTML = "No vayas a africa o te comeran los bichos"
+    // }
+    

@@ -16,7 +16,6 @@ function reordenarArr(array) {
   return array.sort(() => Math.random() - 0.5)
 }
 
-
 // Api preguntas : https://opentdb.com/
 // Creamos array de objetos a partir de la api
 
@@ -25,10 +24,8 @@ async function pedirPreguntas() {
   const basePreguntas = await datos.json();
   const listaPreguntas = basePreguntas.results
 
-
   const arrayPreguntas = [];
   for (let i = 0; i < listaPreguntas.length; i++) {
-
     let question = {
       name: `pregunta${i + 1}`,
       question: listaPreguntas[i].question,
@@ -43,6 +40,8 @@ async function pedirPreguntas() {
     arrayPreguntas.push(question)
   }
 
+ 
+  
   //Usamos el arrayPreguntas para pintar el DOM:
 
   for (let i = 0; i < arrayPreguntas.length; i++) {
@@ -59,7 +58,6 @@ async function pedirPreguntas() {
     encabezado.setAttribute("class", "titulo");
     encabezado.innerHTML = arrayPreguntas[i].question;
     pregunta.appendChild(encabezado);
-
 
     const divRespuestas = document.createElement("div");
     divRespuestas.setAttribute("class", "respuestas")
@@ -88,44 +86,35 @@ async function pedirPreguntas() {
       botonSiguiente.setAttribute("id", `button${i}`);
       botonSiguiente.innerHTML = "Siguiente";
       pregunta.appendChild(botonSiguiente);
-
-
+      //Deshabilitado hasta que se responda:
       botonSiguiente.disabled = true;
-
       const input = document.querySelectorAll(`#test${i + 1}>div>input`);
       input.forEach((input) => {
         input.onclick = function () {
           botonSiguiente.disabled = false
         }
       })
-
       botonSiguiente.onclick = function () {
         document.getElementById(`test${i + 1}`).style.display = "none"
         document.getElementById(`test${i + 2}`).style.display = "block"
       }
-      //El último botón cierrra es el input del formulario
+      //El último botón que se abre es el input del formulario
     } else {
-
       const botonFinal = document.createElement("input");
       botonFinal.setAttribute("type", "submit");
       botonFinal.setAttribute("value", "Finalizado");
       pregunta.appendChild(botonFinal);
-
-
       botonFinal.disabled = true;
-
       const input = document.querySelectorAll(`#test${i + 1}>div>input`);
       input.forEach((input) => {
         input.onclick = function () {
           botonFinal.disabled = false
         }
       })
-
     }
   }
 
   //Validación del formulario:
-
 
   document.querySelector('#formpreguntas').addEventListener('submit', function (event) {
 
@@ -154,15 +143,13 @@ async function pedirPreguntas() {
     //Salida hacia la siguiente página exigida por el ejercicio (donde se desplega unicamente un mensaje con el resultado final) => results.html
 
     window.location.replace("results.html"); //Borra datos guardados
-
   })
-
 }
-
+//Script ejecutable solo en question.html
 if (document.title == 'Quiz') {
   pedirPreguntas()
 }
-
+// Script ejecutable solo en results.html
 if (document.title == 'Tu resultado') {
   let arrayGuardado = JSON.parse(localStorage.getItem("memoryCard"));
   let ultimaPuntuacion = arrayGuardado[arrayGuardado.length - 1].puntuacion
@@ -179,9 +166,8 @@ if (document.title == 'Tu resultado') {
   }
 }
 
-//HOME:
+//Script ejecutable solo en home.html:
 if (document.title == '¡Bienvenido al Quiz!') {
-
 
   //Extraccion de datos:
   let arrayGuardado = JSON.parse(localStorage.getItem("memoryCard"));
@@ -191,18 +177,22 @@ if (document.title == '¡Bienvenido al Quiz!') {
     arrayX.push(arrayGuardado[i].fecha);
     arrayY.push(arrayGuardado[i].puntuacion);
   }
-
-
   //CHART de Chart.js:
+
+
+
+  const arrayXLastTen = arrayX.slice(-10)
+  const arrayYLastTen = arrayY.slice(-10)
+
 
   const ctx = document.getElementById('myChart');
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: arrayX,
+      labels: arrayXLastTen,//cambiarlo por arrayX si no hacemos filtrado
       datasets: [{
         label: 'Respuestas acertadas',
-        data: arrayY,
+        data: arrayYLastTen,
         borderColor: 'black',
         backgroundColor: 'lightblue',
         borderWidth: 4,
@@ -215,7 +205,7 @@ if (document.title == '¡Bienvenido al Quiz!') {
       plugins: {
         title: {
           display: true,
-          text: 'Puntuaciones anteriores',
+          text: 'Últimas 10 puntuaciones',
         },
 
       },
@@ -229,18 +219,17 @@ if (document.title == '¡Bienvenido al Quiz!') {
       }
     }
   });
-  
+
+  //Pintado de lista de puntuaciones  
   const listaPuntuaciones = document.getElementById("listapuntuaciones")
   for (let i = 0; i < arrayGuardado.length; i++) {
     let item = document.createElement("li")
-    item.innerHTML = `${arrayGuardado[i].fecha.substring(11,17)}: <b>${arrayGuardado[i].puntuacion} aciertos</b>`
+    item.innerHTML = `${arrayGuardado[i].fecha.substring(11, 17)}: <b>${arrayGuardado[i].puntuacion} aciertos</b>`
     listaPuntuaciones.appendChild(item)
     
+
   }
-
-
 }
-
 
 //Función para redirigir en un tiempo determinado:
 

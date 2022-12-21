@@ -1,6 +1,6 @@
 //Creación de espacio en el localstorage en caso de que no exista la clave:
 
-for (let i = 0; i < localStorage.length; i++) {
+for (let i = 0; i <= localStorage.length; i++) {
   let key = localStorage.key(i);
   if (key === 'memoryCard') {
     break;
@@ -66,18 +66,17 @@ async function pedirPreguntas() {
     //Las opciones se pintan en un bucle que itera con j dentro del bucle que itera con i
     var inputRespuestas;
     for (let j = 0; j < arrayPreguntas[i].answers.length; j++) {
-      const labelRespuestas = document.createElement("label")
-      labelRespuestas.setAttribute("for", `${respuestasReordenadas[j].value}`)
-      labelRespuestas.innerHTML = respuestasReordenadas[j].label;
-      divRespuestas.appendChild(labelRespuestas)
-
       inputRespuestas = document.createElement("input")
       inputRespuestas.setAttribute("id", `${respuestasReordenadas[j].value}`)
       inputRespuestas.setAttribute("type", "radio")
       inputRespuestas.setAttribute("name", `${arrayPreguntas[i].name}`)
       inputRespuestas.setAttribute("value", `${respuestasReordenadas[j].value}`)
       divRespuestas.appendChild(inputRespuestas)
-
+      
+      const labelRespuestas = document.createElement("label")
+      labelRespuestas.setAttribute("for", `${respuestasReordenadas[j].value}`)
+      labelRespuestas.innerHTML = respuestasReordenadas[j].label;
+      divRespuestas.appendChild(labelRespuestas)
     }
     // El botón que acompaña a cada pregunta es un botón que desbloquea la siguiente (exceptuando la última pregunta)
     if (arrayPreguntas[i] !== arrayPreguntas[arrayPreguntas.length - 1]) {
@@ -178,9 +177,7 @@ if (document.title == '¡Bienvenido al Quiz!') {
     arrayY.push(arrayGuardado[i].puntuacion);
   }
   //CHART de Chart.js:
-
-
-
+  //Guardamos en dos constantes arrays de solo 10 últimas puntuaciones:
   const arrayXLastTen = arrayX.slice(-10)
   const arrayYLastTen = arrayY.slice(-10)
 
@@ -193,8 +190,8 @@ if (document.title == '¡Bienvenido al Quiz!') {
       datasets: [{
         label: 'Respuestas acertadas',
         data: arrayYLastTen,
-        borderColor: 'black',
-        backgroundColor: 'lightblue',
+        borderColor: '#F9D203',
+        backgroundColor: '#22283f',
         borderWidth: 4,
       }]
     },

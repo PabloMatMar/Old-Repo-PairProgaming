@@ -1,3 +1,47 @@
+:root {
+    --dark: #11172E;
+    --white: #FEFEFF;
+    --yellow: #F9D203;
+    --darkSelect: #22283f;
+}
+
+* {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+body {
+    background-color: var(--dark);
+    color: var(--white);
+    text-align: center;
+}
+
+label, button {
+    color: var(--yellow);
+    background-color: var(--dark);
+    border: 1px solid var(--yellow);
+    padding: 10px;
+}
+label:hover, button:hover {
+    background-color: var(--darkSelect);
+}
+/* label:checked {
+
+} */
+
+
+input {
+    display:;
+}
+
+#test10>input {
+
+}
+
+button:checked {
+    color: var(--dark);
+    background-color: var(--yellow);
+}
+
 .regularquestion {
     display: none;
 }
@@ -7,6 +51,23 @@ ul {
     margin: 5%;
 }
 
+/* main {
+    width: 100%;
+    height: 100%;
+} */
+
+/* .flexbox-parent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+
+.firstquestion {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+} */
 
 
 /* #chartdiv {

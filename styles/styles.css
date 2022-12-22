@@ -1,0 +1,295 @@
+:root {
+    --dark: #11172E;
+    --white: #FEFEFF;
+    --yellow: #F9D203;
+    --darkSelect: #22283f;
+}
+
+* {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 16px;
+}
+
+body {
+    background-color: var(--dark);
+    color: var(--white);
+    text-align: center;
+}
+
+main {
+    height: 100vh;
+}
+
+h2 {
+    font-size: 2em;
+}
+
+p {
+    font-size: 1.4em;
+}
+
+
+#bienvenidosection {
+    margin: 100px;
+}
+
+.mainpreguntas, .mainresults {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#formpreguntas {
+    padding: 1%;
+}
+
+fieldset {
+    padding: 50px 30px;
+    border: 0px;
+    
+}
+
+fieldset legend {
+    font-size: 1.8em;
+}
+
+.respuestas {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.respuestas>label {
+    margin-bottom: 20px;
+}
+
+.respuestas>label,
+button,
+input {
+    font-size: 1.3em;
+    color: var(--yellow);
+    background-color: var(--dark);
+    border: 1px solid var(--yellow);
+    padding: 10px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.respuestas>label:hover,
+button:hover,
+input:hover {
+    background-color: var(--darkSelect);
+}
+
+.respuestas>input {
+    display: none;
+}
+
+button:checked,
+.respuestas>input:checked+label,
+input:checked {
+    background-color: var(--yellow);
+    color: var(--dark);
+    font-weight: bold;
+}
+
+button:disabled,
+input:disabled {
+    background-color: var(--dark);
+    color: var(--darkSelect);
+    cursor: not-allowed;
+
+}
+
+/* NUNCA TOCAR:  */
+.regularquestion {
+    display: none;
+}
+
+ul {
+    list-style: none;
+    margin: 5%;
+}
+
+
+#myChart {
+    margin: 5%;
+}
+
+.scorediv {
+    padding-bottom: 20px;
+}
+#chartdiv {
+    position: relative;
+    height: auto;
+    width: 90vw;
+}
+
+.sectionresults {
+    margin: 2%;
+}
+
+.sectionresults>div {
+    margin-bottom: 50px;
+}
+
+#puntuacion {
+    font-size: 4em;
+}
+
+#primeravez {
+    display: none;
+}
+
+#listapuntuaciones {
+    text-align: center;
+}
+
+#listapuntuaciones>li {
+    font-size: 1.3em;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1366px) {
+
+
+    h2 {
+        font-size: 2.4em;
+    }
+    
+    p {
+        font-size: 1.8em;
+    }
+
+
+    #homesection{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    #chartdiv {
+        position: relative;
+        height: auto;
+        width: 50vw;
+    }
+    #myChart {
+        margin: 5%;
+    }
+    
+
+    .scorediv {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+
+    fieldset {
+        border: 2px solid var(--white);
+        margin: 20px;
+        padding: 50px 60px;
+    }
+
+    fieldset legend {
+        font-size: 2em;
+    }
+
+
+    .respuestas>label,
+    button,
+    input {
+        font-size: 2em;
+    }
+
+
+    .respuestas {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+    }
+
+    
+    .respuestas>label {
+        width: 40%;
+    }
+
+    #puntuacion {
+        font-size: 7em;
+    }
+    
+
+
+}
+
+
+@media screen and (min-width: 1366px) {
+
+
+    h2 {
+        font-size: 2.8em;
+    }
+    
+    p {
+        font-size: 2.3em;
+    }
+
+    #homesection{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        
+    }
+
+ 
+
+    #chartdiv {
+        position: relative;
+        height: auto;
+        width: 40vw;
+    }
+
+    
+
+    fieldset {
+        border: 2px solid var(--white);
+        padding: 100px;
+        margin: 40px;
+    }
+  
+    fieldset legend {
+        font-size: 2.3em;
+    }
+
+    .respuestas>label,
+    button,
+    input {
+        font-size: 2.5em;
+    }
+
+    .respuestas {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+    }
+
+    
+    .respuestas>label {
+        width: 40%;
+    }
+
+    #puntuacion {
+        font-size: 7em;
+    }
+
+    #mensajepuntuacion {
+        padding: 30px;
+    }
+
+}

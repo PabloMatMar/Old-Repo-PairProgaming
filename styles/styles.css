@@ -1,4 +1,4 @@
-:root {
+/* :root {
     --dark: #11172E;
     --white: #FEFEFF;
     --yellow: #F9D203;
@@ -23,21 +23,19 @@ label, button {
 }
 label:hover, button:hover {
     background-color: var(--darkSelect);
-}
+} */
 /* label:checked {
 
 } */
 
 
-input {
+/* input {
     display:;
-}
+} */
 
-#test10>input {
 
-}
 
-button:checked {
+/* button:checked {
     color: var(--dark);
     background-color: var(--yellow);
 }
@@ -49,7 +47,7 @@ button:checked {
 ul {
     list-style:none;
     margin: 5%;
-}
+} */
 
 /* main {
     width: 100%;
@@ -75,6 +73,10 @@ ul {
     height:40vh; 
     width:80vw;
 } */
+
+.regularquestion {
+    display: none;
+}
 
 #myChart {
     margin: 5%;

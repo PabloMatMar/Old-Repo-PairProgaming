@@ -1,6 +1,6 @@
 //Creación de espacio en el localstorage en caso de que no exista la clave:
 
-for (let i = 0; i < localStorage.length; i++) {
+for (let i = 0; i <= localStorage.length; i++) {
   let key = localStorage.key(i);
   if (key === 'memoryCard') {
     break;
@@ -133,6 +133,7 @@ async function pedirPreguntas() {
       puntuacion: contador,
       fecha: new Date().toLocaleString()
     }
+    console.log(nuevosDatos)
 
     //Guardado de datos:
 

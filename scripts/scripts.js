@@ -132,7 +132,6 @@ async function pedirPreguntas() {
       puntuacion: contador,
       fecha: new Date().toLocaleString()
     }
-    console.log(nuevosDatos)
 
     //Guardado de datos:
 

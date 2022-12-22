@@ -1,4 +1,4 @@
-/* :root {
+:root {
     --dark: #11172E;
     --white: #FEFEFF;
     --yellow: #F9D203;
@@ -20,7 +20,6 @@ main {
     height: 100vh;
 }
 
-
 h2 {
     font-size: 2em;
 }
@@ -28,7 +27,6 @@ h2 {
 p {
     font-size: 1.4em;
 }
-
 
 
 #bienvenidosection {
@@ -45,7 +43,6 @@ p {
 #formpreguntas {
     padding: 1%;
 }
-
 
 fieldset {
     padding: 50px 30px;
@@ -92,7 +89,6 @@ input:hover {
 button:checked,
 .respuestas>input:checked+label,
 input:checked {
-
     background-color: var(--yellow);
     color: var(--dark);
     font-weight: bold;
@@ -114,7 +110,7 @@ input:disabled {
 ul {
     list-style: none;
     margin: 5%;
-} */
+}
 
 
 #myChart {
@@ -163,7 +159,6 @@ ul {
     
     p {
         font-size: 1.8em;
-
     }
 
 

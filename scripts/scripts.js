@@ -30,7 +30,7 @@ async function pedirPreguntas() {
       name: `pregunta${i + 1}`,
       question: listaPreguntas[i].question,
       answers: [
-        { label: listaPreguntas[i].correct_answer, value: listaPreguntas[i].correct_answer.replace(/\s/g, '') },
+        { label: listaPreguntas[i].correct_answer, value: listaPreguntas[i].correct_answer.replace(/\s/g, '') }, //Esta regexp se refiere a todos los caracteres de espacio en blanco (`\s`) de forma global (g). Los reemplaza por "", para que no haya espacios.
         { label: listaPreguntas[i].incorrect_answers[0], value: listaPreguntas[i].incorrect_answers[0].replace(/\s/g, '') },
         { label: listaPreguntas[i].incorrect_answers[1], value: listaPreguntas[i].incorrect_answers[1].replace(/\s/g, '') },
         { label: listaPreguntas[i].incorrect_answers[2], value: listaPreguntas[i].incorrect_answers[2].replace(/\s/g, '') },
@@ -161,15 +161,23 @@ if (document.title == 'Tu resultado') {
   if (ultimaPuntuacion == 10) {
     mensajeMostrado.innerHTML = "¡Increible! ¡lo acertaste todo!"
   } else {
-    ultimaPuntuacion >= 5 ? mensajeMostrado.innerHTML = "Tienes un buen conocimiento sobre los animales" : mensajeMostrado.innerHTML = "No vayas a África o te comerán los bichos"
+    ultimaPuntuacion >= 5 ? mensajeMostrado.innerHTML = "Nada es perfecto... ¿verdad?" : mensajeMostrado.innerHTML = "¡Te has quedado lejos!"
   }
 }
 
 //Script ejecutable solo en home.html:
 if (document.title == '¡Bienvenido al Quiz!') {
 
+
   //Extraccion de datos:
   let arrayGuardado = JSON.parse(localStorage.getItem("memoryCard"));
+
+  //Comprobación de datos para la apertura del mensaje inicial
+  if (arrayGuardado.length == 0) {
+    document.getElementById("homesection").style.display = "none";
+    document.getElementById("primeravez").style.display = "block";
+  }
+
   let arrayX = [];
   let arrayY = [];
   for (let i = 0; i < arrayGuardado.length; i++) {
@@ -223,9 +231,20 @@ if (document.title == '¡Bienvenido al Quiz!') {
     let item = document.createElement("li")
     item.innerHTML = `${arrayGuardado[i].fecha.substring(11, 17)}: <b>${arrayGuardado[i].puntuacion} aciertos</b>`
     listaPuntuaciones.appendChild(item)
-    
-
   }
+  //Despliegue mensaje inicio
+  const addMessage1 = () => document.getElementById("m1").innerHTML = "¿Te apetece echar una partida?";
+  const addMessage2 = () => document.getElementById("m2").innerHTML = "Toca el botón de arriba, demuestra tus conocimientos y, sobretodo, ¡disfruta!";
+  const addMessage3 = () => document.getElementById("m3").innerHTML = "Venga, esta página no tiene nada más que mostrarte...";
+  const addMessage4 = () => document.getElementById("m4").innerHTML = "...por ahora ;)";
+  const addMessage5 = () => document.getElementById("m5").innerHTML = "La puntuación no va a aparecer por mucho que mires esta pantalla";
+  const addMessage6 = () => document.getElementById("m6").innerHTML = "¿Un minuto esperando? ¡Ánimate y pulsa!";
+  setTimeout(addMessage1, 5000);
+  setTimeout(addMessage2, 8000);
+  setTimeout(addMessage3, 13000);
+  setTimeout(addMessage4, 16000);
+  setTimeout(addMessage5, 30000);
+  setTimeout(addMessage6, 60000);
 }
 
 //Función para redirigir en un tiempo determinado:

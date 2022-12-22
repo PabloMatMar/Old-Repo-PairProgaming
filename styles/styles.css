@@ -47,6 +47,7 @@ p {
 fieldset {
     padding: 50px 30px;
     border: 0px;
+    
 }
 
 fieldset legend {
@@ -56,6 +57,7 @@ fieldset legend {
 .respuestas {
     display: flex;
     flex-direction: column;
+    margin-bottom: 30px;
 }
 
 .respuestas>label {
@@ -71,6 +73,7 @@ input {
     border: 1px solid var(--yellow);
     padding: 10px;
     cursor: pointer;
+    margin: 10px;
 }
 
 .respuestas>label:hover,
@@ -93,8 +96,10 @@ input:checked {
 
 button:disabled,
 input:disabled {
-    background-color: var(--darkSelect);
+    background-color: var(--dark);
+    color: var(--darkSelect);
     cursor: not-allowed;
+
 }
 
 /* NUNCA TOCAR:  */
@@ -131,6 +136,18 @@ ul {
 
 #puntuacion {
     font-size: 4em;
+}
+
+#primeravez {
+    display: none;
+}
+
+#listapuntuaciones {
+    text-align: center;
+}
+
+#listapuntuaciones>li {
+    font-size: 1.3em;
 }
 
 @media screen and (min-width: 768px) and (max-width: 1366px) {
@@ -171,6 +188,7 @@ ul {
     fieldset {
         border: 2px solid var(--white);
         margin: 20px;
+        padding: 50px 60px;
     }
 
     fieldset legend {
@@ -252,8 +270,6 @@ ul {
         font-size: 2.5em;
     }
 
-
-
     .respuestas {
         display: flex;
         flex-direction: row;
@@ -275,7 +291,5 @@ ul {
     #mensajepuntuacion {
         padding: 30px;
     }
-
-
 
 }

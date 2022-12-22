@@ -57,6 +57,6 @@ En la última pregunta nos encontramos con un <u>botón «Finalizar»</u>, una v
 
 <u>Clicar</u> en los <u>nombres para ver</u> las cuentas <u>GitHub</u> de los <u>creadores</u>:
 
-[Francisco Vicente Hernández](https://github.com/Francsy)
+[Francisco Vicente Hernández Ramírez](https://github.com/Francsy)
 
 [Pablo Mateos Martín](https://github.com/PabMatMar)

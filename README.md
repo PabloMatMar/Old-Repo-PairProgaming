@@ -46,7 +46,7 @@ Una frase de ánimo que comenta que tal lo has hecho.
 
 Clicar en los nombres para ver las cuentas GitHub de los creadores:
 
-Fran V. Hdez.
-Pablo Mateos Martín
 
+[Francisco Vicente Hernández Ramírez](https://github.com/Francsy)
 
+[Pablo Mateos Martín](https://github.com/PabMatMar)

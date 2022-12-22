@@ -246,10 +246,3 @@ if (document.title == '¡Bienvenido al Quiz!') {
   setTimeout(addMessage5, 30000);
   setTimeout(addMessage6, 60000);
 }
-
-//Función para redirigir en un tiempo determinado:
-
-// function pageRedirect() {
-//   window.location.replace("../home.html");
-// }    
-// setTimeout("pageRedirect()", 10000);

@@ -14,7 +14,7 @@ Páginas que incluye la web:
 - Un botón **_Compara tus resultados_** que nos llevara a la página incial **HOME** donde podemos ver la gráfica ya mencionada antes con nuestro resultado. 
 - Un botón **_Vuelve a intentarlo_** para realizar de forma inmedia otro test.
 
-![Texto alternativo](pages\images\paginasQuiz.png)
+![Texto alternativo](assets\paginasQuiz.png)
 
 **_GitHub Autores:_**
 

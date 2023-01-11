@@ -1,51 +1,31 @@
 # TBProject03QuizV2
+En esta web podrás jugar a un test de 10 preguntas sobre un tema aleatorio extraido de una [Api](https://opentdb.com).
+
+Pincha aquí si quieres
+
+Navegarás por tres páginas:
+
+### **1. HOME**, contiene:
+- Antes de jugar por primera vez tendrás una presentación de la web a través de mensajes que aparecen.
+- También encontrarás una **gráfica bidimensional** de barras que muestra los últimos resultados (hasta un máximo de 10. Estos son guardados en el navegador.
+- Una vez hagas clic en **_Comenzar quiz_** será redirigido a la página **QUESTION**.
+### **2. QUESTION**, contine:
+- **Una pregunta** y sus cuatro respuestas.
+- Un botón **_Siguiente_** que te llevará a la siguiente pregunta. _¡Ojo! No podrá pulsarse hasta responder._
+- En la última pregunta el botón que aparecerá será para **_Finalizar_**, una vez lo pulses te llevará a la página **RESULTS**.
+3. ### **3. RESULTS**, contiene:
+- Tu resultado: cantidad de aciertos y una valoración sobre tu última partida.
+- Un botón **_Compara tus resultados_** que te llevará a la página inicial **HOME** donde podrás ver la gráfica ya mencionada con tus puntuaciones. 
+- ¿Quieres entrar a jugar otra vez sin muchos rodeos? El botón **_Vuelve a intentarlo_** pide a gritos tu clic.
+
+
+![Texto alternativo](assets/paginasQuiz.png)
 
 
 
-Este proyecto se basa en un juego consistente en responder una batería de diez preguntas tipo test.
+[Pincha aquí para jugar](https://francsy.github.io/TBProject03QuizV2/)
 
-
-El usuario navegará por las siguientes páginas durante su realización:
-Al comenzar y al terminar se encontrará en una página «Home» donde podrá visualizar:
-
-Un botón «COMENZAR QUIZ»:
-
-Una gráfica que mostrará sus últimos diez resultados (dichos resultados se mantendrán mientras el usuario no elimine de forma intencionada la información guardada en el navegador)Los resultados se muestran por cantidad de respuestas correctas en el eje vertical y fecha de realización eje horizontal:
-
-
-De nuevo, y fuera de la gráfica, puede observar sus puntuaciones en promedio de preguntas acertadas y fecha de realización, sin estar limitadas a los diez últimas resultados:
-
-
-En caso de no haber jugado nunca iran apareciendo unos mensajes animandonos a jugar.
-
-Una vez el usuario haga clic en «comenzar quiz» será redirigido a la página cuestión, en ella podrá ver:
-
-La pregunta y sus cuatro respuestas. Se genera de un bloque de diez preguntas pedidas a la API.<u>Las preguntas aparecen de una en una y se presentan de forma aleatoria en cuanto a su orden de aparición:
-
-Un botón «SIGUIENTE» que nos llevara a la siguiente pregunta. No podrá pulsarse hasta escoger una opción de respuesta:
-
-En la última pregunta nos encontramos con un <u>botón «Finalizar», una vez lo pulsemos nos llevará a la página «Resultados»:
-
-
-
-En la página «Resultados» podremos ver:
-
-La cantidad de preguntas bien contestadas expresada en una función decimal:
-
-Un botón «Compara tus Resultados» que nos llevara a la página «Home» donde podemos ver la gráfica ya mencionada antes con nuestro resultado y los nueve anteriores.
-Un botón «Vuelve a intertarlo» que nos llevara directamente a volver a hacer el quiz sin comparar resultados.
-Una frase de ánimo que comenta que tal lo has hecho.
-
-
-
-
-
-
-
-
-
-Clicar en los nombres para ver las cuentas GitHub de los creadores:
-
+**_Autores:_**
 
 [Francisco Vicente Hernández Ramírez](https://github.com/Francsy)
 

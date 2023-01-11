@@ -1,48 +1,38 @@
-//Creación de espacio en el localstorage en caso de que no exista la clave:
-
-for (let i = 0; i <= localStorage.length; i++) {
-  let key = localStorage.key(i);
-  if (key === 'memoryCard') {
-    break;
-  } else {
-    const arrayPuntuaciones = []
-    localStorage.setItem("memoryCard", JSON.stringify(arrayPuntuaciones));
-  }
+//Funciones auxiliares:
+const addMessage = (texto, tiempo) => {
+  const pintaMensaje = () => document.getElementById("mensaje").innerHTML += `<p>${texto}</p>`
+  setTimeout(pintaMensaje, tiempo)
 }
 
-//Funciones auxiliares:
-//Funcion para reordenar:
-function reordenarArr(array) {
+const reordenarArr = (array) => {
   return array.sort(() => Math.random() - 0.5)
 }
 
-// Api preguntas : https://opentdb.com/
-// Creamos array de objetos a partir de la api
-
-async function pedirPreguntas() {
-  const datos = await fetch('https://opentdb.com/api.php?amount=10&category=27&difficulty=easy&type=multiple')
+//Funcion para pedir preguntas de la API, construir objeto con ellas y llamar a la función de pintado
+const pedirPreguntas = async () => {
+  const datos = await fetch('https://opentdb.com/api.php?amount=10&difficulty=medium&type=multiple')
   const basePreguntas = await datos.json();
-  const listaPreguntas = basePreguntas.results
-
+  const listaPreguntas = basePreguntas.results;
   const arrayPreguntas = [];
   for (let i = 0; i < listaPreguntas.length; i++) {
     let question = {
       name: `pregunta${i + 1}`,
       question: listaPreguntas[i].question,
       answers: [
-        { label: listaPreguntas[i].correct_answer, value: listaPreguntas[i].correct_answer.replace(/\s/g, '') }, //Esta regexp se refiere a todos los caracteres de espacio en blanco (`\s`) de forma global (g). Los reemplaza por "", para que no haya espacios.
-        { label: listaPreguntas[i].incorrect_answers[0], value: listaPreguntas[i].incorrect_answers[0].replace(/\s/g, '') },
-        { label: listaPreguntas[i].incorrect_answers[1], value: listaPreguntas[i].incorrect_answers[1].replace(/\s/g, '') },
-        { label: listaPreguntas[i].incorrect_answers[2], value: listaPreguntas[i].incorrect_answers[2].replace(/\s/g, '') },
+        { label: listaPreguntas[i].correct_answer, value: listaPreguntas[i].correct_answer.split(' ').join('') },
+        { label: listaPreguntas[i].incorrect_answers[0], value: listaPreguntas[i].incorrect_answers[0].split(' ').join('') },
+        { label: listaPreguntas[i].incorrect_answers[1], value: listaPreguntas[i].incorrect_answers[1].split(' ').join('') },
+        { label: listaPreguntas[i].incorrect_answers[2], value: listaPreguntas[i].incorrect_answers[2].split(' ').join('') },
       ],
-      correct: listaPreguntas[i].correct_answer.replace(/\s/g, '')
+      correct: listaPreguntas[i].correct_answer.split(' ').join('')
     }
     arrayPreguntas.push(question)
   }
+  crearPreguntas(arrayPreguntas)
+}
 
- 
-  
-  //Usamos el arrayPreguntas para pintar el DOM:
+//Función para pinta rlas preguntas
+const crearPreguntas = (arrayPreguntas) => {
 
   for (let i = 0; i < arrayPreguntas.length; i++) {
 
@@ -63,7 +53,6 @@ async function pedirPreguntas() {
     divRespuestas.setAttribute("class", "respuestas")
     pregunta.appendChild(divRespuestas)
 
-    //Las opciones se pintan en un bucle que itera con j dentro del bucle que itera con i
     var inputRespuestas;
     for (let j = 0; j < arrayPreguntas[i].answers.length; j++) {
       inputRespuestas = document.createElement("input")
@@ -72,7 +61,7 @@ async function pedirPreguntas() {
       inputRespuestas.setAttribute("name", `${arrayPreguntas[i].name}`)
       inputRespuestas.setAttribute("value", `${respuestasReordenadas[j].value}`)
       divRespuestas.appendChild(inputRespuestas)
-      
+
       const labelRespuestas = document.createElement("label")
       labelRespuestas.setAttribute("for", `${respuestasReordenadas[j].value}`)
       labelRespuestas.innerHTML = respuestasReordenadas[j].label;
@@ -85,7 +74,6 @@ async function pedirPreguntas() {
       botonSiguiente.setAttribute("id", `button${i}`);
       botonSiguiente.innerHTML = "Siguiente";
       pregunta.appendChild(botonSiguiente);
-      //Deshabilitado hasta que se responda:
       botonSiguiente.disabled = true;
       const input = document.querySelectorAll(`#test${i + 1}>div>input`);
       input.forEach((input) => {
@@ -114,41 +102,41 @@ async function pedirPreguntas() {
   }
 
   //Validación del formulario:
-
   document.querySelector('#formpreguntas').addEventListener('submit', function (event) {
-
     event.preventDefault();
-    //Establecemos un contador que suma si la respuesta es correcta
-
     let contador = 0;
     for (let i = 0; i < arrayPreguntas.length; i++) {
       if (event.target[arrayPreguntas[i].name].value === arrayPreguntas[i].correct) {
         contador++;
       }
     }
-
     //Datos de la partida jugada por el usuario:
     let nuevosDatos = {
       puntuacion: contador,
       fecha: new Date().toLocaleString()
     }
-
     //Guardado de datos:
-
     let arrayGuardado = JSON.parse(localStorage.getItem("memoryCard"))
     arrayGuardado.push(nuevosDatos)
     localStorage.setItem("memoryCard", JSON.stringify(arrayGuardado))
-
-    //Salida hacia la siguiente página exigida por el ejercicio (donde se desplega unicamente un mensaje con el resultado final) => results.html
-
-    window.location.replace("results.html"); //Borra datos guardados
+    window.location.replace("results.html");
   })
 }
-//Script ejecutable solo en question.html
+
+//Creación de clave/array en el localstorage en caso de que no exista:
+for (let i = 0; i <= localStorage.length; i++) {
+  let key = localStorage.key(i);
+  if (key === 'memoryCard') {
+    break;
+  } else {
+    localStorage.setItem("memoryCard", JSON.stringify([]));
+  }
+}
+
 if (document.title == 'Quiz') {
   pedirPreguntas()
 }
-// Script ejecutable solo en results.html
+
 if (document.title == 'Tu resultado') {
   let arrayGuardado = JSON.parse(localStorage.getItem("memoryCard"));
   let ultimaPuntuacion = arrayGuardado[arrayGuardado.length - 1].puntuacion
@@ -157,21 +145,12 @@ if (document.title == 'Tu resultado') {
   const mensajeMostrado = document.querySelector("#mensajepuntuacion")
 
   resultadoMostrado.innerHTML = `${ultimaPuntuacion} / 10`
-
-  if (ultimaPuntuacion == 10) {
-    mensajeMostrado.innerHTML = "¡Increible! ¡lo acertaste todo!"
-  } else {
-    ultimaPuntuacion >= 5 ? mensajeMostrado.innerHTML = "Nada es perfecto... ¿verdad?" : mensajeMostrado.innerHTML = "¡Te has quedado lejos!"
-  }
+  ultimaPuntuacion == 10 ? mensajeMostrado.innerHTML = "¡Increible! ¡lo acertaste todo!" : (ultimaPuntuacion >= 5 ? mensajeMostrado.innerHTML = "Nada es perfecto... ¿verdad?" : mensajeMostrado.innerHTML = "¡Te has quedado lejos!")
 }
 
-//Script ejecutable solo en home.html:
 if (document.title == '¡Bienvenido al Quiz!') {
-
-
-  //Extraccion de datos:
+  
   let arrayGuardado = JSON.parse(localStorage.getItem("memoryCard"));
-
   //Comprobación de datos para la apertura del mensaje inicial
   if (arrayGuardado.length == 0) {
     document.getElementById("homesection").style.display = "none";
@@ -185,7 +164,6 @@ if (document.title == '¡Bienvenido al Quiz!') {
     arrayY.push(arrayGuardado[i].puntuacion);
   }
   //CHART de Chart.js:
-  //Guardamos en dos constantes arrays de solo 10 últimas puntuaciones:
   const arrayXLastTen = arrayX.slice(-10)
   const arrayYLastTen = arrayY.slice(-10)
 
@@ -194,7 +172,7 @@ if (document.title == '¡Bienvenido al Quiz!') {
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: arrayXLastTen,//cambiarlo por arrayX si no hacemos filtrado
+      labels: arrayXLastTen,
       datasets: [{
         label: 'Respuestas acertadas',
         data: arrayYLastTen,
@@ -232,17 +210,11 @@ if (document.title == '¡Bienvenido al Quiz!') {
     item.innerHTML = `${arrayGuardado[i].fecha.substring(11, 17)}: <b>${arrayGuardado[i].puntuacion} aciertos</b>`
     listaPuntuaciones.appendChild(item)
   }
-  //Despliegue mensaje inicio
-  const addMessage1 = () => document.getElementById("m1").innerHTML = "¿Te apetece echar una partida?";
-  const addMessage2 = () => document.getElementById("m2").innerHTML = "Toca el botón de arriba, demuestra tus conocimientos y, sobretodo, ¡disfruta!";
-  const addMessage3 = () => document.getElementById("m3").innerHTML = "Venga, esta página no tiene nada más que mostrarte...";
-  const addMessage4 = () => document.getElementById("m4").innerHTML = "...por ahora ;)";
-  const addMessage5 = () => document.getElementById("m5").innerHTML = "La puntuación no va a aparecer por mucho que mires esta pantalla";
-  const addMessage6 = () => document.getElementById("m6").innerHTML = "¿Un minuto esperando? ¡Ánimate y pulsa!";
-  setTimeout(addMessage1, 5000);
-  setTimeout(addMessage2, 8000);
-  setTimeout(addMessage3, 13000);
-  setTimeout(addMessage4, 16000);
-  setTimeout(addMessage5, 30000);
-  setTimeout(addMessage6, 60000);
+
+  addMessage('¿Te apetece echar una partida?', 5000);
+  addMessage('Toca el botón de arriba, demuestra tus conocimientos y, sobretodo', 8000);
+  addMessage('Venga, esta página no tiene nada más que mostrarte...', 13000);
+  addMessage('...por ahora ;)', 16000);
+  addMessage('La puntuación no va a aparecer por mucho que mires esta pantalla', 30000);
+  addMessage('¿Un minuto esperando? ¡Ánimate y pulsa!?', 60000);
 }

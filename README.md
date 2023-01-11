@@ -1,6 +1,8 @@
 # TBProject03QuizV2
 En esta web podrás jugar a un test de 10 preguntas sobre un tema aleatorio extraido de una [Api](https://opentdb.com).
 
+Pincha aquí si quieres
+
 Navegarás por tres páginas:
 
 ### **1. HOME**, contiene:
@@ -16,7 +18,12 @@ Navegarás por tres páginas:
 - Un botón **_Compara tus resultados_** que te llevará a la página inicial **HOME** donde podrás ver la gráfica ya mencionada con tus puntuaciones. 
 - ¿Quieres entrar a jugar otra vez sin muchos rodeos? El botón **_Vuelve a intentarlo_** pide a gritos tu clic.
 
+
 ![Texto alternativo](assets/paginasQuiz.png)
+
+
+
+[Pincha aquí para jugar](https://francsy.github.io/TBProject03QuizV2/)
 
 **_Autores:_**
 

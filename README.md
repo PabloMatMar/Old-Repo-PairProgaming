@@ -1,22 +1,24 @@
 # TBProject03QuizV2
-La web es un test de 10 preguntas sobre un tema aleatorio extraido de una Api.
-Páginas que incluye la web:
-1. ### **HOME**, contiene:
-- Antes de jugar por primera vez unos mensajes nos animan a probar la web.
-- Una **gráfica bidimensional** de barras que muestra los últimos diez resultados guardados en el navegador.
-- Una vez el usuario haga clic en **_Comenzar quiz_** será redirigido a la página **QUESTION**.
-2. ### **QUESTION**, contine:
+En esta web podrás jugar a un test de 10 preguntas sobre un tema aleatorio extraido de una [Api](https://opentdb.com).
+
+Navegarás por tres páginas:
+
+### **1. HOME**, contiene:
+- Antes de jugar por primera vez tendrás una presentación de la web a través de mensajes que aparecen.
+- También encontrarás una **gráfica bidimensional** de barras que muestra los últimos resultados (hasta un máximo de 10. Estos son guardados en el navegador.
+- Una vez hagas clic en **_Comenzar quiz_** será redirigido a la página **QUESTION**.
+### **2. QUESTION**, contine:
 - **Una pregunta** y sus cuatro respuestas.
-- Un botón **_Siguiente_** que nos llevara a la siguiente pregunta. _No podrá pulsarse hasta responder._
-- En la última pregunta nos encontramos con un botón **_Finalizar_**, una vez lo pulsemos nos llevará a la página **RESULTS**.
-3. ### **RESULTS**, contiene:
-- Cantidad de aciertos y comentario sobre nuestro resultado.
-- Un botón **_Compara tus resultados_** que nos llevara a la página incial **HOME** donde podemos ver la gráfica ya mencionada antes con nuestro resultado. 
-- Un botón **_Vuelve a intentarlo_** para realizar de forma inmedia otro test.
+- Un botón **_Siguiente_** que te llevará a la siguiente pregunta. _¡Ojo! No podrá pulsarse hasta responder._
+- En la última pregunta el botón que aparecerá será para **_Finalizar_**, una vez lo pulses te llevará a la página **RESULTS**.
+3. ### **3. RESULTS**, contiene:
+- Tu resultado: cantidad de aciertos y una valoración sobre tu última partida.
+- Un botón **_Compara tus resultados_** que te llevará a la página inicial **HOME** donde podrás ver la gráfica ya mencionada con tus puntuaciones. 
+- ¿Quieres entrar a jugar otra vez sin muchos rodeos? El botón **_Vuelve a intentarlo_** pide a gritos tu clic.
 
-![Texto alternativo](assets\paginasQuiz.png)
+![Texto alternativo](assets/paginasQuiz.png)
 
-**_GitHub Autores:_**
+**_Autores:_**
 
 [Francisco Vicente Hernández Ramírez](https://github.com/Francsy)
 

@@ -138,7 +138,7 @@ ul {
     font-size: 4em;
 }
 
-#primeravez {
+#primeravez, #register, #user-logged {
     display: none;
 }
 

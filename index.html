@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,36 +11,74 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
+
 <body>
     <header>
+        <div class="logout"></div>
     </header>
     <main>
-        <section id="bienvenidosection">
-            <a href="./pages/question.html"><button>COMENZAR QUIZ</button></a>
-        </section>
-        <section id="homesection">
-            <div id="divtabla" class="scorediv">
-            <h2>TUS ÚLTIMAS PUNTUACIONES</h2>
+        <section id="user-logged">
+            <section id="bienvenidosection">
+                <a href="./pages/question.html"><button>COMENZAR QUIZ</button></a>
+            </section>
+            <section id="homesection">
+                <div id="divtabla" class="scorediv">
+                    <h2>TUS ÚLTIMAS PUNTUACIONES</h2>
 
-            <div id="chartdiv">
-                <canvas id="myChart"></canvas>
-            </div>
-            </div>
-            <div id="divlista" class="scorediv">
-            <h2>TOTAL SCORE</h2>
-            <ul id="listapuntuaciones"></ul>
-            </div>
+                    <div id="chartdiv">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+                <div id="divlista" class="scorediv">
+                    <h2>TOTAL SCORE</h2>
+                    <ul id="listapuntuaciones"></ul>
+                </div>
+            </section>
+            <section id="primeravez">
+                <div>
+                    <h2>JUEGA PARA OBTENER TU PRIMERA PUNTUACIÓN</h2>
+                </div>
+                <p>Parece que es tu primera vez por aquí</p>
+                <p>Por favor, siéntete como en casa</p>
+                <div id="mensaje"></div>
+
+            </section>
         </section>
-        <section id="primeravez">
-            <div><h2>JUEGA PARA OBTENER TU PRIMERA PUNTUACIÓN</h2></div>
-            <p>Parece que es tu primera vez por aquí</p>
-            <p>Por favor, siéntete como en casa</p>
-            <div id="mensaje"></div>
-            
+        <section id="nouser">
+            <section>
+                <h2>LOGIN</h2>
+                <form id="formlog" action="#" method="post">
+                    <label for="logemail">Your mail</label>
+                    <input type="email" name="logemail" placeholder="Your mail...">
+                    <label for="logpassword">Your password</label>
+                    <input type="password" name="logpassword" placeholder="Your password...">
+                    <input type="submit" value="Get in">
+                </form>
+            </section>
+            <div>
+                <button id="openregistration">I don't have an account</button>
+            </div>
+            <section id="register">
+                <h2>SIGN UP</h2>
+                <form id="formreg" action="#" method="POST">
+                    <label for="email">Mail</label>
+                    <input type="email" name="email" placeholder="Mail">
+                    <label for="password1">Password</label>
+                    <input type="password" name="password1" placeholder="Password...">
+                    <label for="password2">Repeat password</label>
+                    <input type="password" name="password2" placeholder="Repeat password...">
+                    <input type="submit" value="Register">
+                </form>
+            </section>
         </section>
+
     </main>
     <footer>
     </footer>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
     <script src="./scripts/scripts.js"></script>
 </body>
+
 </html>

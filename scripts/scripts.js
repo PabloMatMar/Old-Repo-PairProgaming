@@ -295,13 +295,12 @@ if (document.title == '¡Bienvenido al Quiz!' || document.title == 'Tu resultado
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       //Creación de botón logout en el navigator de index
-      document.querySelector('.logout').innerHTML = `<button class="getout">Log out</button>`;
+      document.querySelector('.logout').innerHTML = `<button class="getout">SALIR</button>`;
       document.querySelector('.getout').onclick = logOut;
     } else {
       document.querySelector('.logout').innerHTML = '';
     }
   });
-
 }
 
 if (document.title == 'Quiz') {
@@ -329,9 +328,6 @@ if (document.title == '¡Bienvenido al Quiz!') {
       addMessage('¿Un minuto esperando? ¡Ánimate y pulsa!?', 60000);  
     }
   });
-
-
-
 
   //Login 
 

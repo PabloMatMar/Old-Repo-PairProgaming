@@ -64,31 +64,97 @@ const createUser = (email, password) => {
     });
 }
 
-const addToMemoryCard = (userID, resultsObj) => {
-    db.collection('usuarios')
+const saveMemoryCard = (userID, resultsObj) => {
+  return db.collection('usuarios')
     .where('id', '==', userID)
     .get()
-    .then((snapshot) =>{
-        snapshot.forEach((doc) => {
-          let arrMemoryCard = doc.data().memoryCard;
-          doc.ref.update({ memoryCard: arrMemoryCard.concat(resultsObj) });
-        })
+    .then((snapshot) => {
+      snapshot.forEach((doc) => {
+        let arrMemoryCard = doc.data().memoryCard;
+        doc.ref.update({ memoryCard: arrMemoryCard.concat(resultsObj) });
+      })
     })
 }
 
-// const getFromMemoryCard = (userID)
+const loadMemoryCard = (userID, action) => {
+  db.collection('usuarios')
+    .where('id', '==', userID)
+    .get()
+    .then((snapshot) => {
+      snapshot.forEach((doc) => {
+        action(doc.data().memoryCard)
+      })
+    })
+}
+
+const createChart = (arr) => {
+  if (arr.length == 0) {
+    document.getElementById("homesection").style.display = "none";
+    document.getElementById("primeravez").style.display = "block";
+  }
+  let arrayX = [];
+  let arrayY = [];
+
+  for (let i = 0; i < arr.length; i++) {
+    arrayX.push(arr[i].fecha);
+    arrayY.push(arr[i].puntuacion);
+  }
+  const arrayXLastTen = arrayX.slice(-10)
+  const arrayYLastTen = arrayY.slice(-10)
+
+  const ctx = document.getElementById('myChart');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: arrayXLastTen,
+      datasets: [{
+        label: 'Respuestas acertadas',
+        data: arrayYLastTen,
+        borderColor: '#F9D203',
+        backgroundColor: '#22283f',
+        borderWidth: 4,
+      }]
+    },
+    options: {
+      layout: {
+        padding: 10
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Últimas 10 puntuaciones',
+        },
+
+      },
+      aspectRatio: 1,
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 10,
+          min: 0
+        }
+      }
+    }
+  })
+
+  const listaPuntuaciones = document.getElementById("listapuntuaciones")
+  for (let i = 0; i < arr.length; i++) {
+    let item = document.createElement("li")
+    item.innerHTML = `${arr[i].fecha.substring(11, 17)}: <b>${arr[i].puntuacion} aciertos</b>`
+    listaPuntuaciones.appendChild(item)
+  }
+}
+
+const showResults = (arr) => {
+  let lastResult = arr[arr.length - 1].puntuacion;
+  const resultadoMostrado = document.querySelector("#puntuacion")
+  const mensajeMostrado = document.querySelector("#mensajepuntuacion")
+  resultadoMostrado.innerHTML = `${lastResult} / 10`
+  lastResult == 10 ? mensajeMostrado.innerHTML = "¡Increible! ¡lo acertaste todo!" : (lastResult >= 5 ? mensajeMostrado.innerHTML = "Nada es perfecto... ¿verdad?" : mensajeMostrado.innerHTML = "¡Te has quedado lejos!")
+}
+
 
 //Funciones auxiliares:
-
-//Ver datos de la data base
-// const readDataBase = () => {
-//   db.collection('usuarios').get()
-//   .then((querySnapshot) => {
-//     querySnapshot.forEach(doc => console.log(doc.id, doc.data()))
-//   })
-// }
-// readDataBase();
-
 
 const addMessage = (texto, tiempo) => {
   const pintaMensaje = () => document.getElementById("mensaje").innerHTML += `<p>${texto}</p>`
@@ -207,8 +273,15 @@ const crearPreguntas = (arrayPreguntas) => {
       fecha: new Date().toLocaleString()
     }
     //Guardado de datos:
-    addToMemoryCard(firebase.auth().currentUser.uid, nuevosDatos);
-    window.location.replace("results.html");
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        saveMemoryCard(firebase.auth().currentUser.uid, nuevosDatos).then(() => {
+          setTimeout(() => window.location.replace("results.html"), 1000)
+        })
+        .catch(error => console.log(error))
+      }
+    });
+   
   })
 }
 
@@ -224,14 +297,14 @@ const crearPreguntas = (arrayPreguntas) => {
 //   }
 // }
 
-if (document.title == '¡Bienvenido al Quiz!' || document.title == 'Tu resultado' ) {
+if (document.title == '¡Bienvenido al Quiz!' || document.title == 'Tu resultado') {
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-        //Creación de botón logout en el navigator de index
-        document.querySelector('.logout').innerHTML = `<button class="getout">Log out</button>`;
-        document.querySelector('.getout').onclick = logOut;
+      //Creación de botón logout en el navigator de index
+      document.querySelector('.logout').innerHTML = `<button class="getout">Log out</button>`;
+      document.querySelector('.getout').onclick = logOut;
     } else {
-        document.querySelector('.logout').innerHTML = '';
+      document.querySelector('.logout').innerHTML = '';
     }
   });
 
@@ -242,86 +315,29 @@ if (document.title == 'Quiz') {
 }
 
 if (document.title == 'Tu resultado') {
-
-  let arrayGuardado = JSON.parse(localStorage.getItem("memoryCard"));
-  let ultimaPuntuacion = arrayGuardado[arrayGuardado.length - 1].puntuacion
-
-  const resultadoMostrado = document.querySelector("#puntuacion")
-  const mensajeMostrado = document.querySelector("#mensajepuntuacion")
-
-  resultadoMostrado.innerHTML = `${ultimaPuntuacion} / 10`
-  ultimaPuntuacion == 10 ? mensajeMostrado.innerHTML = "¡Increible! ¡lo acertaste todo!" : (ultimaPuntuacion >= 5 ? mensajeMostrado.innerHTML = "Nada es perfecto... ¿verdad?" : mensajeMostrado.innerHTML = "¡Te has quedado lejos!")
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      loadMemoryCard(firebase.auth().currentUser.uid, showResults)
+    }
+  });
 }
 
 if (document.title == '¡Bienvenido al Quiz!') {
 
-  let arrayGuardado = JSON.parse(localStorage.getItem("memoryCard"));
-  //Comprobación de datos para la apertura del mensaje inicial
-  if (arrayGuardado.length == 0) {
-    document.getElementById("homesection").style.display = "none";
-    document.getElementById("primeravez").style.display = "block";
-  }
-
-  let arrayX = [];
-  let arrayY = [];
-  for (let i = 0; i < arrayGuardado.length; i++) {
-    arrayX.push(arrayGuardado[i].fecha);
-    arrayY.push(arrayGuardado[i].puntuacion);
-  }
-  //CHART de Chart.js:
-  const arrayXLastTen = arrayX.slice(-10)
-  const arrayYLastTen = arrayY.slice(-10)
-
-
-  const ctx = document.getElementById('myChart');
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: arrayXLastTen,
-      datasets: [{
-        label: 'Respuestas acertadas',
-        data: arrayYLastTen,
-        borderColor: '#F9D203',
-        backgroundColor: '#22283f',
-        borderWidth: 4,
-      }]
-    },
-    options: {
-      layout: {
-        padding: 10
-      },
-      plugins: {
-        title: {
-          display: true,
-          text: 'Últimas 10 puntuaciones',
-        },
-
-      },
-      aspectRatio: 1,
-      scales: {
-        y: {
-          beginAtZero: true,
-          max: 10,
-          min: 0
-        }
-      }
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      loadMemoryCard(firebase.auth().currentUser.uid, createChart)  
+      addMessage('¿Te apetece echar una partida?', 5000);
+      addMessage('Toca el botón de arriba, demuestra tus conocimientos y, sobretodo', 8000);
+      addMessage('Venga, esta página no tiene nada más que mostrarte...', 13000);
+      addMessage('...por ahora ;)', 16000);
+      addMessage('La puntuación no va a aparecer por mucho que mires esta pantalla', 30000);
+      addMessage('¿Un minuto esperando? ¡Ánimate y pulsa!?', 60000);  
     }
   });
 
-  //Pintado de lista de puntuaciones  
-  const listaPuntuaciones = document.getElementById("listapuntuaciones")
-  for (let i = 0; i < arrayGuardado.length; i++) {
-    let item = document.createElement("li")
-    item.innerHTML = `${arrayGuardado[i].fecha.substring(11, 17)}: <b>${arrayGuardado[i].puntuacion} aciertos</b>`
-    listaPuntuaciones.appendChild(item)
-  }
 
-  addMessage('¿Te apetece echar una partida?', 5000);
-  addMessage('Toca el botón de arriba, demuestra tus conocimientos y, sobretodo', 8000);
-  addMessage('Venga, esta página no tiene nada más que mostrarte...', 13000);
-  addMessage('...por ahora ;)', 16000);
-  addMessage('La puntuación no va a aparecer por mucho que mires esta pantalla', 30000);
-  addMessage('¿Un minuto esperando? ¡Ánimate y pulsa!?', 60000);
+
 
   //Login 
 
@@ -331,11 +347,12 @@ if (document.title == '¡Bienvenido al Quiz!') {
     let pass = event.target.elements.logpassword.value;
     console.log(mail, pass)
     loginUser(mail, pass)
+    window.scrollTo(0, 0);
   })
   //Apertura del registro de usuario
   const botonRegistro = document.getElementById('openregistration');
   const registro = document.getElementById('register');
-  botonRegistro.onclick = () => registro.style.display !== 'block' ? registro.style.display = 'block' : registro.style.display = 'none' 
+  botonRegistro.onclick = () => registro.style.display !== 'block' ? registro.style.display = 'block' : registro.style.display = 'none'
 
   //Registro de usuario
   document.getElementById('formreg').addEventListener('submit', (event) => {
@@ -344,16 +361,17 @@ if (document.title == '¡Bienvenido al Quiz!') {
     let password = event.target.elements.password1.value;
     let checkPass = event.target.elements.password2.value;
     password === checkPass ? createUser(mail, password) : alert('Error: la contraseña debe ser la misma en los dos campos')
+    window.scrollTo(0, 0);
   })
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-        botonRegistro.style.display = 'none';
-        document.querySelector('#user-logged').style.display = 'block';
-        document.querySelector('#nouser').style.display = 'none';
+      botonRegistro.style.display = 'none';
+      document.querySelector('#user-logged').style.display = 'block';
+      document.querySelector('#nouser').style.display = 'none';
     } else {
-        document.querySelector('#register').style.display = 'none';
-        document.querySelector('#nouser').style.display = 'block';
+      document.querySelector('#register').style.display = 'none';
+      document.querySelector('#nouser').style.display = 'block';
     }
-});
+  });
 }

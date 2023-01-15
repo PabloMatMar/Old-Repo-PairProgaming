@@ -11,6 +11,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+
 //Listener
 firebase.auth().onAuthStateChanged((user) => user ? console.log(`Está en el sistema:${user.email} ${user.uid}`) : console.log("no hay usuarios en el sistema"))
 
@@ -276,6 +277,7 @@ const crearPreguntas = (arrayPreguntas) => {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         saveMemoryCard(firebase.auth().currentUser.uid, nuevosDatos).then(() => {
+          document.querySelector('.mainpreguntas').innerHTML = '<h1>CARGANDO...</h1>'
           setTimeout(() => window.location.replace("results.html"), 1000)
         })
         .catch(error => console.log(error))
@@ -287,15 +289,7 @@ const crearPreguntas = (arrayPreguntas) => {
 
 
 /* -------------------------------CODIGO PARA EL MANEJO DE LAS PAGINAS------------------------------- */
-//Creación de clave/array en el localstorage en caso de que no exista:
-// for (let i = 0; i <= localStorage.length; i++) {
-//   let key = localStorage.key(i);
-//   if (key === 'memoryCard') {
-//     break;
-//   } else {
-//     localStorage.setItem("memoryCard", JSON.stringify([]));
-//   }
-// }
+
 
 if (document.title == '¡Bienvenido al Quiz!' || document.title == 'Tu resultado') {
   firebase.auth().onAuthStateChanged(function (user) {

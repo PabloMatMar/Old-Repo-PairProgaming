@@ -1,12 +1,12 @@
 //inicio de fb
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBNOjqmJ9fQwc_ReQubkeKrLmqvmaiqk48",
-  authDomain: "quizv2-5c21a.firebaseapp.com",
-  projectId: "quizv2-5c21a",
-  storageBucket: "quizv2-5c21a.appspot.com",
-  messagingSenderId: "1087403902810",
-  appId: "1:1087403902810:web:e58c18ac400a7c75c21563"
+  apiKey: "AIzaSyAdn442EZ99RWQ1wRRZTK-cf-33UkUvEq4",
+  authDomain: "quizv2-d720d.firebaseapp.com",
+  projectId: "quizv2-d720d",
+  storageBucket: "quizv2-d720d.appspot.com",
+  messagingSenderId: "493508209554",
+  appId: "1:493508209554:web:8335df63a0481c3254af4b"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -32,7 +32,6 @@ const loginUser = (email, password) => {
     })
 }
 
-//Función para deslogearse:
 const logOut = () => {
   let user = firebase.auth().currentUser;
   firebase.auth().signOut()
@@ -45,7 +44,6 @@ const logOut = () => {
   location.reload();
 }
 
-//Función que crea nuevo usuario:
 const createUser = (email, password) => {
   firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((credential) => {
@@ -55,7 +53,8 @@ const createUser = (email, password) => {
       db.collection('usuarios')
         .add({
           id: user.uid,
-          email: user.email
+          email: user.email,
+          memoryCard: []
         })
         .then((userDoc) => console.log(`New user document with ID: ${user.uid}`))
         .catch((error) => console.error("Error adding document: ", error))
@@ -65,7 +64,32 @@ const createUser = (email, password) => {
     });
 }
 
+const addToMemoryCard = (userID, resultsObj) => {
+    db.collection('usuarios')
+    .where('id', '==', userID)
+    .get()
+    .then((snapshot) =>{
+        snapshot.forEach((doc) => {
+          let arrMemoryCard = doc.data().memoryCard;
+          doc.ref.update({ memoryCard: arrMemoryCard.concat(resultsObj) });
+        })
+    })
+}
+
+// const getFromMemoryCard = (userID)
+
 //Funciones auxiliares:
+
+//Ver datos de la data base
+// const readDataBase = () => {
+//   db.collection('usuarios').get()
+//   .then((querySnapshot) => {
+//     querySnapshot.forEach(doc => console.log(doc.id, doc.data()))
+//   })
+// }
+// readDataBase();
+
+
 const addMessage = (texto, tiempo) => {
   const pintaMensaje = () => document.getElementById("mensaje").innerHTML += `<p>${texto}</p>`
   setTimeout(pintaMensaje, tiempo)
@@ -98,7 +122,7 @@ const pedirPreguntas = async () => {
   crearPreguntas(arrayPreguntas)
 }
 
-//Función para pinta rlas preguntas
+//Función para pintar las preguntas
 const crearPreguntas = (arrayPreguntas) => {
 
   for (let i = 0; i < arrayPreguntas.length; i++) {
@@ -183,24 +207,22 @@ const crearPreguntas = (arrayPreguntas) => {
       fecha: new Date().toLocaleString()
     }
     //Guardado de datos:
-    let arrayGuardado = JSON.parse(localStorage.getItem("memoryCard"))
-    arrayGuardado.push(nuevosDatos)
-    localStorage.setItem("memoryCard", JSON.stringify(arrayGuardado))
+    addToMemoryCard(firebase.auth().currentUser.uid, nuevosDatos);
     window.location.replace("results.html");
   })
 }
 
 
-/* ----------------------------------CODIGO PARA LAS PAGINAS----------------------------------*/
+/* -------------------------------CODIGO PARA EL MANEJO DE LAS PAGINAS------------------------------- */
 //Creación de clave/array en el localstorage en caso de que no exista:
-for (let i = 0; i <= localStorage.length; i++) {
-  let key = localStorage.key(i);
-  if (key === 'memoryCard') {
-    break;
-  } else {
-    localStorage.setItem("memoryCard", JSON.stringify([]));
-  }
-}
+// for (let i = 0; i <= localStorage.length; i++) {
+//   let key = localStorage.key(i);
+//   if (key === 'memoryCard') {
+//     break;
+//   } else {
+//     localStorage.setItem("memoryCard", JSON.stringify([]));
+//   }
+// }
 
 if (document.title == '¡Bienvenido al Quiz!' || document.title == 'Tu resultado' ) {
   firebase.auth().onAuthStateChanged(function (user) {
@@ -220,6 +242,7 @@ if (document.title == 'Quiz') {
 }
 
 if (document.title == 'Tu resultado') {
+
   let arrayGuardado = JSON.parse(localStorage.getItem("memoryCard"));
   let ultimaPuntuacion = arrayGuardado[arrayGuardado.length - 1].puntuacion
 

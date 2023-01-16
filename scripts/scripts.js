@@ -24,12 +24,14 @@ const loginUser = (email, password) => {
     .then((credential) => {
       let user = credential.user;
       console.log(`${user.email} está en el sistema (ID: ${user.uid})`)
-      alert(`${user.email} está en el sistema (ID: ${user.uid})`)
+      // alert(`${user.email} está en el sistema (ID: ${user.uid})`)
+      Toastify({ text: `${user.email} está en el sistema`, duration: 4000, style: { background: "#F9D203", color: 'black', fontsize: '100px', }, position: 'left' }).showToast()
       console.log('USER', user)
     })
     .catch((error) => {
       console.log(error.code);
       console.log(error.message)
+      Toastify({ text: `${error.message}`, duration: 4000, style: { background: "#F9D203", color: 'black', fontsize: '100px', }, position: 'left' }).showToast()
     })
 }
 
@@ -37,12 +39,15 @@ const logOut = () => {
   let user = firebase.auth().currentUser;
   firebase.auth().signOut()
     .then(() => {
+      Toastify({ text: `${user.mail} saliendo del juego`, duration: 4000, style: { background: "#F9D203", color: 'black', fontsize: '100px', }, position: 'left' }).showToast()
       console.log(user.mail + 'is out')
+
     })
     .catch((error) => {
+      Toastify({ text: `Error: ${error}`, duration: 4000, style: { background: "#F9D203", color: 'black', fontsize: '100px', }, position: 'left' }).showToast()
       console.log('Error: ' + error)
-    });
-  location.reload();
+    }).then(location.reload())
+
 }
 
 const createUser = (email, password) => {
@@ -50,7 +55,9 @@ const createUser = (email, password) => {
     .then((credential) => {
       let user = credential.user;
       console.log(`${user.email} registrado con ID: ${user.uid}`)
-      alert(`registrado ${user.email} con ID ${user.uid}`)
+      // alert(`registrado ${user.email} con ID ${user.uid}`)
+      Toastify({ text: `${user.email} registrado y preparado para jugar`, duration: 4000, style: { background: "#F9D203", color: 'black', fontsize: '100px', }, position: 'left' }).showToast()
+
       db.collection('usuarios')
         .add({
           id: user.uid,
@@ -62,6 +69,8 @@ const createUser = (email, password) => {
     })
     .catch((error) => {
       console.log("Error" + error.message)
+      Toastify({ text: `Error: ${error.message}`, duration: 4000, style: { background: "#F9D203", color: 'black', fontsize: '100px', }, position: 'left' }).showToast()
+
     });
 }
 
@@ -278,7 +287,7 @@ const crearPreguntas = (arrayPreguntas) => {
       if (user) {
         saveMemoryCard(firebase.auth().currentUser.uid, nuevosDatos).then(() => {
           document.querySelector('.mainpreguntas').innerHTML = '<h1>CARGANDO...</h1>'
-          setTimeout(() => window.location.replace("results.html"), 1000)
+          setTimeout(() => window.location.replace("results.html"), 1300)
         })
         .catch(error => console.log(error))
       }

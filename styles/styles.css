@@ -28,7 +28,6 @@ p {
     font-size: 1.4em;
 }
 
-
 #bienvenidosection {
     margin: 100px;
 }
@@ -112,6 +111,9 @@ ul {
     margin: 5%;
 }
 
+#bienvenidosection > * {
+    margin: 20px 0px;
+}
 
 #myChart {
     margin: 5%;
@@ -120,6 +122,7 @@ ul {
 .scorediv {
     padding-bottom: 20px;
 }
+
 #chartdiv {
     position: relative;
     height: auto;
@@ -127,7 +130,7 @@ ul {
 }
 
 .sectionresults {
-    margin: 2%;
+    margin-top: 3%;
 }
 
 .sectionresults>div {
@@ -138,7 +141,7 @@ ul {
     font-size: 4em;
 }
 
-#primeravez {
+#primeravez, #register, #user-logged {
     display: none;
 }
 
@@ -150,8 +153,17 @@ ul {
     font-size: 1.3em;
 }
 
-@media screen and (min-width: 768px) and (max-width: 1366px) {
+#nouser > section > form {
+    display: flex;
+    flex-direction: column;
+    margin: 1% 4%;
+}
 
+#nouser > section > form > input {
+    margin: 15px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1366px) {
 
     h2 {
         font-size: 2.4em;
@@ -160,7 +172,6 @@ ul {
     p {
         font-size: 1.8em;
     }
-
 
     #homesection{
         display: flex;
@@ -173,10 +184,10 @@ ul {
         height: auto;
         width: 50vw;
     }
+
     #myChart {
         margin: 5%;
     }
-    
 
     .scorediv {
         display: flex;
@@ -195,13 +206,11 @@ ul {
         font-size: 2em;
     }
 
-
     .respuestas>label,
     button,
     input {
         font-size: 2em;
     }
-
 
     .respuestas {
         display: flex;
@@ -220,7 +229,19 @@ ul {
     #puntuacion {
         font-size: 7em;
     }
+
+    #nouser {
+        margin-top: 100px;
+    }
+
+   
+    #nouser > section > form {
+        margin: 2% 18%;
+    }
     
+    #nouser > section > form > input {
+        margin: 20px;
+    }
 
 
 }
@@ -234,7 +255,7 @@ ul {
     }
     
     p {
-        font-size: 2.3em;
+        font-size: 2.2em;
     }
 
     #homesection{
@@ -286,10 +307,18 @@ ul {
 
     #puntuacion {
         font-size: 7em;
+        
     }
 
     #mensajepuntuacion {
         padding: 30px;
     }
 
+    #nouser > section > form {
+        margin: 2% 30%;
+    }
+    
+    #nouser > section > form > input {
+        margin: 20px;
+    }
 }
